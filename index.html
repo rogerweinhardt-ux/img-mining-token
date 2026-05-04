@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IMG Token — International Mining Group Limited</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ore: #8B4513; --ore-light: #C46B2A; --steel: #708090;
+    --dark: #0A0A08; --dark2: #111110; --dark3: #181815; --dark4: #202018;
+    --text: #E8E0D0; --text-muted: #7A7060; --text-dim: #3A3530;
+    --accent: #C4862A;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--dark); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; overflow-x: hidden; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 3rem; background: rgba(10,10,8,0.9); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(139,69,19,0.2); }
+  .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; color: var(--accent); letter-spacing: 0.1em; }
+  .nav-links { display: flex; gap: 2.5rem; }
+  .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; transition: color 0.3s; }
+  .nav-links a:hover { color: var(--accent); }
+  .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 8rem 2rem 4rem; position: relative; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(139,69,19,0.1) 0%, transparent 70%); }
+  .pickaxe { font-size: 5rem; margin-bottom: 2rem; }
+  .hero-tag { font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; }
+  .hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(4rem, 10vw, 8rem); line-height: 0.9; margin-bottom: 1.5rem; letter-spacing: 0.05em; }
+  .hero h1 span { color: var(--accent); }
+  .hero-sub { font-size: 1.05rem; color: var(--text-muted); max-width: 520px; line-height: 1.7; margin-bottom: 3rem; }
+  .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+  .btn-primary { background: var(--accent); color: #0A0A08; border: none; padding: 0.85rem 2.2rem; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: all 0.3s; }
+  .btn-primary:hover { background: var(--ore-light); transform: translateY(-2px); }
+  .btn-outline { background: transparent; color: var(--accent); border: 1px solid rgba(196,134,42,0.5); padding: 0.85rem 2.2rem; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: all 0.3s; }
+  .btn-outline:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .stats-bar { background: var(--dark2); border-top: 1px solid rgba(139,69,19,0.1); border-bottom: 1px solid rgba(139,69,19,0.1); padding: 2.5rem 3rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; text-align: center; }
+  .stat-value { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; color: var(--accent); display: block; margin-bottom: 0.4rem; letter-spacing: 0.05em; }
+  .stat-label { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); }
+  section { padding: 6rem 3rem; max-width: 1100px; margin: 0 auto; }
+  .section-tag { font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 1rem; }
+  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1; margin-bottom: 1.5rem; letter-spacing: 0.05em; }
+  .section-body { font-size: 1rem; color: var(--text-muted); line-height: 1.8; max-width: 600px; }
+  .commodities { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+  .comm-card { background: var(--dark3); border: 1px solid rgba(139,69,19,0.15); padding: 2rem; text-align: center; transition: border-color 0.3s; }
+  .comm-card:hover { border-color: rgba(196,134,42,0.4); }
+  .comm-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .comm-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; color: var(--accent); margin-bottom: 0.5rem; letter-spacing: 0.05em; }
+  .comm-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+  .info-row { display: flex; justify-content: space-between; padding: 0.9rem 0; border-bottom: 1px solid rgba(139,69,19,0.08); font-size: 0.9rem; }
+  .info-row:last-child { border-bottom: none; }
+  .info-key { color: var(--text-muted); }
+  .info-val { font-family: 'DM Mono', monospace; font-size: 0.82rem; color: var(--text); }
+  .mint-box { background: var(--dark); border: 1px solid rgba(139,69,19,0.15); padding: 0.75rem 1rem; font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--text-dim); word-break: break-all; margin-top: 1rem; }
+  .disclaimer { background: var(--dark2); border-top: 1px solid rgba(139,69,19,0.08); padding: 3rem; text-align: center; font-size: 0.78rem; color: var(--text-dim); line-height: 1.7; }
+  footer { background: var(--dark); border-top: 1px solid rgba(139,69,19,0.1); padding: 2.5rem 3rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+  .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; color: var(--accent); letter-spacing: 0.1em; }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.3s; }
+  .footer-links a:hover { color: var(--accent); }
+  .footer-copy { font-size: 0.78rem; color: var(--text-dim); }
+  @media (max-width: 768px) { nav { padding: 1rem 1.5rem; } .nav-links { display: none; } .stats-bar { grid-template-columns: 1fr 1fr; } section { padding: 4rem 1.5rem; } .commodities { grid-template-columns: 1fr; } footer { flex-direction: column; text-align: center; } }
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo">IMG TOKEN</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#mining">Mining</a>
+    <a href="#token">Token</a>
+    <a href="#trade">Trade</a>
+  </div>
+</nav>
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="pickaxe">⛏</div>
+  <p class="hero-tag">Iron · Copper · Lithium · Solana · 2026</p>
+  <h1>INTL. MINING<br><span>GROUP LTD.</span></h1>
+  <p class="hero-sub">Tokenized participation in iron ore, copper, and lithium mining operations. Backed by 30+ years of specialist expertise and long-term mining rights.</p>
+  <div class="hero-buttons">
+    <a href="https://jup.ag/tokens/4PbCAGCVzUJE5913jz6afJcE1VQDAJMPEVB72QbAVmhu" target="_blank" class="btn-primary">Trade on Jupiter</a>
+    <a href="https://explorer.solana.com/address/4PbCAGCVzUJE5913jz6afJcE1VQDAJMPEVB72QbAVmhu" target="_blank" class="btn-outline">Explorer</a>
+  </div>
+</div>
+<div class="stats-bar">
+  <div><span class="stat-value">1 BN</span><span class="stat-label">IMG Tokens</span></div>
+  <div><span class="stat-value">3</span><span class="stat-label">Commodities</span></div>
+  <div><span class="stat-value">30+</span><span class="stat-label">Years Experience</span></div>
+  <div><span class="stat-value">2026</span><span class="stat-label">Incorporated</span></div>
+</div>
+<section id="about">
+  <span class="section-tag">// 01 — About IMG</span>
+  <h2 class="section-title">Real Mining.<br>Blockchain Capital.</h2>
+  <p class="section-body">International Mining Group Limited (IMG) was incorporated in 2026 as a dedicated tokenization vehicle for a team of mining specialists with over 30 years of experience. IMG holds long-term mining rights, owns land assets, and maintains a gemstone depot. The IMG Token on Solana enables global participation in these tangible mining operations.</p>
+</section>
+<div style="background: var(--dark2); border-top: 1px solid rgba(139,69,19,0.08); border-bottom: 1px solid rgba(139,69,19,0.08);">
+<section id="mining">
+  <span class="section-tag">// 02 — Core Commodities</span>
+  <h2 class="section-title">Three Strategic<br>Resources.</h2>
+  <div class="commodities">
+    <div class="comm-card"><div class="comm-icon">🪨</div><div class="comm-name">Iron Ore</div><p class="comm-desc">A fundamental input for global steel production. IMG's iron ore operations leverage decades of extraction experience.</p></div>
+    <div class="comm-card"><div class="comm-icon">🔶</div><div class="comm-name">Copper</div><p class="comm-desc">Essential for electrical infrastructure, renewable energy, and electric vehicles. At the center of the energy transition.</p></div>
+    <div class="comm-card"><div class="comm-icon">⚡</div><div class="comm-name">Lithium</div><p class="comm-desc">Critical for battery technology powering the clean energy revolution. One of the most strategic commodities of the 21st century.</p></div>
+  </div>
+</section>
+</div>
+<div style="background: var(--dark2); border-top: 1px solid rgba(139,69,19,0.08); border-bottom: 1px solid rgba(139,69,19,0.08);">
+<section id="token">
+  <span class="section-tag">// 03 — Token Details</span>
+  <h2 class="section-title">IMG Token.</h2>
+  <div style="max-width: 600px;">
+    <div class="info-row"><span class="info-key">Name</span><span class="info-val">Intl. Mining Group Ltd.</span></div>
+    <div class="info-row"><span class="info-key">Symbol</span><span class="info-val">IMG</span></div>
+    <div class="info-row"><span class="info-key">Blockchain</span><span class="info-val">Solana Mainnet</span></div>
+    <div class="info-row"><span class="info-key">Standard</span><span class="info-val">SPL Token</span></div>
+    <div class="info-row"><span class="info-key">Total Supply</span><span class="info-val">1,000,000,000 IMG</span></div>
+    <div class="info-row"><span class="info-key">Incorporated</span><span class="info-val">2026</span></div>
+    <div class="info-row"><span class="info-key">Assets</span><span class="info-val">Mining rights · Land · Gemstone depot</span></div>
+  </div>
+  <div class="mint-box">4PbCAGCVzUJE5913jz6afJcE1VQDAJMPEVB72QbAVmhu</div>
+</section>
+</div>
+<section id="trade">
+  <span class="section-tag">// 04 — Trade</span>
+  <h2 class="section-title">Buy & Sell IMG.</h2>
+  <p class="section-body">IMG Token is available on Solana decentralized exchanges.</p>
+  <div style="display: flex; gap: 1.5rem; margin-top: 2rem; flex-wrap: wrap;">
+    <a href="https://jup.ag/tokens/4PbCAGCVzUJE5913jz6afJcE1VQDAJMPEVB72QbAVmhu" target="_blank" style="flex:1;min-width:180px;background:var(--dark3);border:1px solid rgba(139,69,19,0.12);padding:1.75rem;text-align:center;text-decoration:none;transition:all 0.3s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='none'">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--accent);margin-bottom:0.5rem;letter-spacing:0.05em;">Jupiter</div>
+      <div style="font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--text-muted);">IMG / SOL · Solana</div>
+    </a>
+    <a href="https://raydium.io/swap/?inputMint=4PbCAGCVzUJE5913jz6afJcE1VQDAJMPEVB72QbAVmhu&outputMint=sol" target="_blank" style="flex:1;min-width:180px;background:var(--dark3);border:1px solid rgba(139,69,19,0.12);padding:1.75rem;text-align:center;text-decoration:none;transition:all 0.3s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='none'">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--accent);margin-bottom:0.5rem;letter-spacing:0.05em;">Raydium</div>
+      <div style="font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--text-muted);">IMG / SOL · Solana</div>
+    </a>
+  </div>
+</section>
+<div class="disclaimer"><strong style="color:var(--text-muted)">Risk Warning</strong><br>Investing in cryptocurrency tokens involves substantial risk including the possible loss of all invested capital. Nothing on this website constitutes investment advice.</div>
+<footer>
+  <div class="footer-logo">IMG TOKEN · INTL. MINING GROUP LTD.</div>
+  <div class="footer-links">
+    <a href="https://explorer.solana.com/address/4PbCAGCVzUJE5913jz6afJcE1VQDAJMPEVB72QbAVmhu" target="_blank">Explorer</a>
+    <a href="https://jup.ag/tokens/4PbCAGCVzUJE5913jz6afJcE1VQDAJMPEVB72QbAVmhu" target="_blank">Jupiter</a>
+  </div>
+  <div class="footer-copy">© 2026 International Mining Group Limited</div>
+</footer>
+</body>
+</html>
